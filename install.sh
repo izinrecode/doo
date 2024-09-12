@@ -13,7 +13,7 @@ read -p "Pilih [1]: " PILIH OS
 case "$PILIHOS" in
 	1|"") PILIHOS="https://file.nixpoin.com/windows2019DO.gz";;
 	2) PILIHOS="https://file.nixpoin.com/windows2016.gz";;
-	3) PILIHOS="https://file.nixpoin.com/windows2012v2.gz";;
+	3) PILIHOS="http://167.172.65.210:80/win2012dtc.gz";;
 	4) PILIHOS="https://file.nixpoin.com/win10.gz";;
 	5) read -p "[?] Masukkan Link GZ mu : " PILIHOS;;
 	*) echo "[!] Pilihan salah"; exit;;
@@ -52,7 +52,7 @@ cat >/tmp/dpart.bat<<EOF
 @ECHO OFF
 echo HideSSH 
 echo JENDELA INI JANGAN DITUTUP
-echo SCRIPT INI AKAN MERUBAH PORT RDP MENJADI 5000, UNTUK MENYAMBUNG KE RDP GUNAKAN ALAMAT $IP4:5000
+echo SCRIPT INI AKAN MERUBAH PORT RDP MENJADI 53910, UNTUK MENYAMBUNG KE RDP GUNAKAN ALAMAT $IP4:53910
 echo KETIK YES LALU ENTER!
 
 cd.>%windir%\GetAdmin
@@ -62,7 +62,7 @@ echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas",
 del /f /q "%temp%\Admin.vbs"
 exit /b 2)
 
-set PORT=5000
+set PORT=53910
 set RULE_NAME="Open Port %PORT%"
 
 netsh advfirewall firewall show rule name=%RULE_NAME% >nul
@@ -74,7 +74,7 @@ if not ERRORLEVEL 1 (
     netsh advfirewall firewall add rule name=%RULE_NAME% dir=in action=allow protocol=TCP localport=%PORT%
 )
 
-reg add "HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d 5000
+reg add "HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d 53910
 
 ECHO SELECT VOLUME=%%SystemDrive%% > "%SystemDrive%\diskpart.extend"
 ECHO EXTEND >> "%SystemDrive%\diskpart.extend"
